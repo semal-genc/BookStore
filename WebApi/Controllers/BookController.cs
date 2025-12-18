@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebApi.BookOperations.CreateBook;
+using WebApi.BookOperations.DeleteBook;
+using WebApi.BookOperations.GetBookDetail;
 using WebApi.BookOperations.GetBooks;
 using WebApi.BookOperations.UpdateBooks;
 using WebApi.DBOperations;
@@ -27,9 +28,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<GetByIdBooksViewModel> GetById(int id)
+        public ActionResult<GetBookDetailViewModel> GetById(int id)
         {
-            var query = new GetByIdBooksQuery(_context)
+            var query = new GetBookDetailQuery(_context)
             {
                 BookId = id
             };
@@ -46,14 +47,7 @@ namespace WebApi.Controllers
                 Model = newBook
             };
 
-            try
-            {
-                command.Handle();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            command.Handle();
 
             return Created("", null);
         }
@@ -66,14 +60,7 @@ namespace WebApi.Controllers
                 Model = model
             };
             command.BookId = id;
-            try
-            {
-                command.Handle();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            command.Handle();
 
             return Ok();
         }
@@ -81,12 +68,9 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteBook(int id)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Id == id);
-            if (book is null)
-                return BadRequest();
-            _context.Books.Remove(book);
-
-            _context.SaveChanges();
+            DeleteBookCommand command = new DeleteBookCommand(_context);
+            command.BookId = id;
+            command.Handle();
             return Ok();
         }
     }

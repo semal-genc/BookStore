@@ -1,26 +1,26 @@
 using WebApi.Common;
 using WebApi.DBOperations;
 
-namespace WebApi.BookOperations.GetBooks
+namespace WebApi.BookOperations.GetBookDetail
 {
-    public class GetByIdBooksQuery
+    public class GetBookDetailQuery
     {
         public int BookId { get; set; }
 
         private readonly BookStoreDbContext dbContext;
 
-        public GetByIdBooksQuery(BookStoreDbContext dbContext)
+        public GetBookDetailQuery(BookStoreDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        public GetByIdBooksViewModel Handle()
+        public GetBookDetailViewModel Handle()
         {
             var book = dbContext.Books.SingleOrDefault(x => x.Id == BookId);
             if (book is null)
                 throw new InvalidOperationException("Kitap bulunamadı!");
 
-            return new GetByIdBooksViewModel
+            return new GetBookDetailViewModel
             {
                 Title = book.Title,
                 PageCount = book.PageCount,
@@ -30,7 +30,7 @@ namespace WebApi.BookOperations.GetBooks
         }
     }
 
-    public class GetByIdBooksViewModel
+    public class GetBookDetailViewModel
     {
         public required string Title { get; set; }
         public int PageCount { get; set; }
