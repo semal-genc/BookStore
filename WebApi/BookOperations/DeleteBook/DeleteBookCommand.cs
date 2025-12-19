@@ -14,9 +14,9 @@ namespace WebApi.BookOperations.DeleteBook
 
         public void Handle()
         {
-            var book=dbContext.Books.Where(x=>x.Id==BookId).SingleOrDefault();
-            if(book is null)
-            throw new InvalidOperationException("Silinecek kitap bulunamadı!");
+            var book = dbContext.Books.Where(x => x.Id == BookId).SingleOrDefault();
+            if (book is null)
+                throw new InvalidOperationException("Silinecek kitap bulunamadı!");
 
             dbContext.Books.Remove(book);
             dbContext.SaveChanges();

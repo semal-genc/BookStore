@@ -22,9 +22,9 @@ namespace WebApi.Middlewares
             {
                 await HandleException(context, ex.Message, HttpStatusCode.BadRequest);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                await HandleException(context, "Beklenmeyen bir hata oluştu!", HttpStatusCode.InternalServerError);
+                await HandleException(context, ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
