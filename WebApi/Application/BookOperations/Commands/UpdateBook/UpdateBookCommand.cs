@@ -1,7 +1,6 @@
-using WebApi.BookOperations.GetBooks;
 using WebApi.DBOperations;
 
-namespace WebApi.BookOperations.UpdateBooks
+namespace WebApi.Application.BookOperations.Commands.UpdateBook
 {
     public class UpdateBookCommand
     {
