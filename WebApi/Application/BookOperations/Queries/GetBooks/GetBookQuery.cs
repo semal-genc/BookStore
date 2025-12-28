@@ -17,18 +17,18 @@ namespace WebApi.Application.BookOperations.Queries.GetBooks
 
         public List<BooksViewModel> Handle()
         {
-            var bookList = DbContext.Books.Include(x => x.Genre).OrderBy(x => x.Id).ToList<Book>();
-            List<BooksViewModel> vm = _mapper.Map<List<BooksViewModel>>(bookList);
-
-            return vm;
+            var bookList = DbContext.Books.AsNoTracking().Include(x => x.Genre).Include(x => x.Author).OrderBy(x => x.Id).ToList<Book>();
+            return _mapper.Map<List<BooksViewModel>>(bookList);
         }
     }
 
     public class BooksViewModel
     {
-        public required string Title { get; set; }
+        public string Title { get; set; } = null!;
         public int PageCount { get; set; }
         public DateOnly PublishDate { get; set; }
-        public string? Genre { get; set; }
+
+        public string Genre { get; set; } = null!;
+        public string AuthorFullName { get; set; } = null!;
     }
 }

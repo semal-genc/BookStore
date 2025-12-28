@@ -63,7 +63,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel model)
         {
-            UpdateBookCommand command = new UpdateBookCommand(_context)
+            UpdateBookCommand command = new UpdateBookCommand(_context,_mapper)
             {
                 Model = model
             };

@@ -19,21 +19,20 @@ namespace WebApi.Application.BookOperations.Queries.GetBookDetail
 
         public GetBookDetailViewModel Handle()
         {
-            var book = dbContext.Books.Include(x => x.Genre).Where(book => book.Id == BookId).SingleOrDefault(x => x.Id == BookId);
-            if (book is null)
+            var book = dbContext.Books.AsNoTracking().Include(x => x.Genre).Include(x => x.Author).SingleOrDefault(x => x.Id == BookId) ??
                 throw new InvalidOperationException("Kitap bulunamadı!");
 
-            GetBookDetailViewModel vm = _mapper.Map<GetBookDetailViewModel>(book);
-
-            return vm;
+            return _mapper.Map<GetBookDetailViewModel>(book);
         }
     }
 
     public class GetBookDetailViewModel
     {
-        public required string Title { get; set; }
+        public string Title { get; set; } = null!;
         public int PageCount { get; set; }
         public DateOnly PublishDate { get; set; }
-        public string? Genre { get; set; }
+
+        public string Genre { get; set; } = null!;
+        public string AuthorFullName { get; set; } = null!;
     }
 }
