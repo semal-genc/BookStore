@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<BookStoreDbContext>(Options => Options.UseInMemoryDatabase(databaseName: "BookStoreDB"));
+builder.Services.AddScoped<IBookStoreDbContext>(provider=>provider.GetRequiredService<BookStoreDbContext>());
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
