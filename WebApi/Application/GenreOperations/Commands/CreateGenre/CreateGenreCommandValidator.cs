@@ -6,7 +6,7 @@ namespace WebApi.Application.GenreOperations.Commands.CreateGenre
     {
         public CreateGenreCommandValidator()
         {
-            RuleFor(command => command.Model.Name).NotNull().NotEmpty().Must(name=>!string.IsNullOrWhiteSpace(name)).MinimumLength(4);
+            RuleFor(command => command.Model.Name).NotNull().NotEmpty().Must(name => !string.IsNullOrWhiteSpace(name)).MinimumLength(4);
         }
     }
 }
