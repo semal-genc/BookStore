@@ -19,7 +19,7 @@ namespace WebApi.Application.AuthorOperations.Commands.UpdateAuthor
         public void Handle()
         {
             var author = _context.Authors.SingleOrDefault(x => x.Id == AuthorId) ??
-                throw new InvalidOperationException("Güncellemek istediğinizyazar bulunamadı");
+                throw new InvalidOperationException("Güncellemek istediğiniz yazar bulunamadı");
 
             _mapper.Map(Model, author);
 
