@@ -9,6 +9,7 @@ using WebApi.Application.BookOperations.Queries.GetBookDetail;
 using WebApi.Application.BookOperations.Queries.GetBooks;
 using WebApi.Application.GenreOperations.Queries.GetGenreDetail;
 using WebApi.Application.GenreOperations.Queries.GetGenres;
+using WebApi.Application.UserOperations.Commands.CreateUser;
 using WebApi.Entities;
 
 namespace WebApi.Common
@@ -76,12 +77,11 @@ namespace WebApi.Common
 
             CreateMap<CreateAuthorModel, Author>()
                 .ForMember(dest => dest.Name,
-                    opt => opt.MapFrom(src => src.Name.Trim())
-                    )
-                .ForMember(
-                    dest => dest.Surname,
-                    opt => opt.MapFrom(src => src.Surname.Trim())
-                    );
+                    opt => opt.MapFrom(src => src.Name.Trim()))
+
+                .ForMember(dest => dest.Surname,
+                    opt => opt.MapFrom(src => src.Surname.Trim()));
+
             CreateMap<UpdateAuthorModel, Author>()
                 .ForMember(dest => dest.Name, opt =>
                 {
@@ -99,6 +99,9 @@ namespace WebApi.Common
                     opt.MapFrom(src => src.BirthDate!.Value);
                 });
 
+            /* USER */
+            CreateMap<CreateUserModel, User>()
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
         }
     }
 }
